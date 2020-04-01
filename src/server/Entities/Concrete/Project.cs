@@ -5,27 +5,23 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Entities.Concrete
 {
-    [Table("User")]
-    public class User : IEntity
+    [Table("Project")]
+    public class Project : IEntity
     {
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public Guid Id { get; set; }
         [Required]
         [MaxLength(100)]
-        public string FirstName { get; set; }
-        [Required]
-        [MaxLength(100)]
-        public string LastName { get; set; }
-        [Required]
-        [MaxLength(100)]
-        public string Email { get; set; }
+        public string Name { get; set; }
         [Required]
         [MaxLength(1000)]
-        public string PasswordSalt { get; set; }
+        public string Description { get; set; }
         [Required]
-        [MaxLength(1000)]
-        public string PasswordHash { get; set; }
+        [MaxLength(100)]
+        public string ShortCode { get; set; }
+        [Required]
+        public Guid CustomerId { get; set; }
         [Required]
         public DateTime CreatedOn { get; set; }
         [Required]
@@ -35,17 +31,17 @@ namespace Entities.Concrete
         [Required]
         public Guid ModifiedBy { get; set; }
         [Required]
-        public UserStatusTypes StatusCode { get; set; }
+        public ProjectStatusTypes StatusCode { get; set; }
         [Required]
-        public UserStateTypes StateCode { get; set; }
+        public ProjectStateTypes StateCode { get; set; }
     }
 
-    public enum UserStatusTypes : short
+    public enum ProjectStatusTypes : short
     {
         Deactive = 0,
         Active = 1
     }
-    public enum UserStateTypes : short
+    public enum ProjectStateTypes : short
     {
         Deactive = 0,
         Active = 1

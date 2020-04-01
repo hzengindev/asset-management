@@ -5,17 +5,15 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Entities.Concrete
 {
-    [Table("Role")]
-    public class Role : IEntity
+    [Table("ProjectUser")]
+    public class ProjectUser:IEntity
     {
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public Guid Id { get; set; }
         [Required]
-        [MaxLength(100)]
-        public string Name { get; set; }
+        public Guid ProjectId { get; set; }
         [Required]
-        [MaxLength(1000)]
-        public string Description { get; set; }
+        public Guid UserId { get; set; }
     }
 }
