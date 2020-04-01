@@ -1,0 +1,2 @@
+create migration => dotnet ef migrations add CreateModelAndInitialData -s ../WebAPI/WebAPI.csproj
+update migration => dotnet ef database update -s ../WebAPI/WebAPI.csproj
