@@ -26,17 +26,14 @@ namespace Entities.Concrete
         [Required]
         [MaxLength(1000)]
         public string PasswordHash { get; set; }
-        [Required]
-        public DateTime CreatedOn { get; set; }
-        [Required]
-        public DateTime ModifiedOn { get; set; }
-        [Required]
-        public Guid CreatedBy { get; set; }
-        [Required]
-        public Guid ModifiedBy { get; set; }
-        [Required]
+
+        [DataType(DataType.DateTime)]
+        public DateTime? CreatedOn { get; set; }
+        [DataType(DataType.DateTime)]
+        public DateTime? ModifiedOn { get; set; }
+        public Guid? CreatedBy { get; set; }
+        public Guid? ModifiedBy { get; set; }
         public UserStatusTypes StatusCode { get; set; }
-        [Required]
         public UserStateTypes StateCode { get; set; }
     }
 

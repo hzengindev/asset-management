@@ -22,6 +22,10 @@ namespace Entities
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             var userId = Guid.NewGuid();
+            var projectId = Guid.NewGuid();
+            var customerId = Guid.NewGuid();
+            var projectUserId = Guid.NewGuid();
+
             modelBuilder.Entity<User>().HasData(new User
             {
                 Id = userId,
@@ -30,12 +34,46 @@ namespace Entities
                 Email = "admin@test.com",
                 PasswordHash = "Pe/GAkoysqFrrBJ9ECjYmzO0JH6Eu6Xae3YcY5Hld39noqbz8vvhTcZp+uZ5whfJuK+PBqNpIMEACVQc7ZDqXw==",
                 PasswordSalt = "Pj8PdCe/AMmXEcpofLIwMQe487JOZKRUVj6+drP75QtaTazArhso+zE7IxN1ehtKD3ldJfJE9+Rta0knsQ9hOWBvZob6WJTIfdMW1vMy9LosGpc5VWWq1x3OFl9HiMqAz98rpS0oXd7woxZYjEFyyGyISCyLIMW+aFeqoXJq9jc=",
-                ModifiedBy = userId,
-                ModifiedOn = DateTime.Now,
                 StateCode = UserStateTypes.Active,
                 StatusCode = UserStatusTypes.Active,
+                ModifiedBy = userId,
+                ModifiedOn = DateTime.Now,
                 CreatedBy = userId,
-                CreatedOn = DateTime.Now,
+                CreatedOn = DateTime.Now
+            });
+
+            modelBuilder.Entity<Customer>().HasData(new Customer
+            {
+                Id = customerId,
+                Name = "Demo customer",
+                StateCode = CustomerStateTypes.Active,
+                StatusCode = CustomerStatusTypes.Active,
+                ModifiedBy = userId,
+                ModifiedOn = DateTime.Now,
+                CreatedBy = userId,
+                CreatedOn = DateTime.Now
+            });
+
+            modelBuilder.Entity<Project>().HasData(new Project
+            {
+                Id = projectId,
+                CustomerId = customerId,
+                Name = "Demo project",
+                Description = "Demo project",
+                ShortCode = "Demo-Project",
+                StateCode = ProjectStateTypes.Active,
+                StatusCode = ProjectStatusTypes.Active,
+                ModifiedBy = userId,
+                ModifiedOn = DateTime.Now,
+                CreatedBy = userId,
+                CreatedOn = DateTime.Now
+            });
+
+            modelBuilder.Entity<ProjectUser>().HasData(new ProjectUser
+            {
+                Id = projectUserId,
+                ProjectId = projectId,
+                UserId = userId
             });
 
             base.OnModelCreating(modelBuilder);

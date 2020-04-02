@@ -27,17 +27,12 @@ namespace Entities.Concrete
         [Required]
         [MaxLength(1000)]
         public string PreviewFile { get; set; }
-        [Required]
+        
         public DateTime CreatedOn { get; set; }
-        [Required]
         public DateTime ModifiedOn { get; set; }
-        [Required]
         public Guid CreatedBy { get; set; }
-        [Required]
         public Guid ModifiedBy { get; set; }
-        [Required]
         public VersionStatusTypes StatusCode { get; set; }
-        [Required]
         public VersionStateTypes StateCode { get; set; }
     }
 

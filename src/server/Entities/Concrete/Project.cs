@@ -1,5 +1,6 @@
 ﻿using Entities.Abstract;
 using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
@@ -22,17 +23,12 @@ namespace Entities.Concrete
         public string ShortCode { get; set; }
         [Required]
         public Guid CustomerId { get; set; }
-        [Required]
+
         public DateTime CreatedOn { get; set; }
-        [Required]
         public DateTime ModifiedOn { get; set; }
-        [Required]
         public Guid CreatedBy { get; set; }
-        [Required]
         public Guid ModifiedBy { get; set; }
-        [Required]
         public ProjectStatusTypes StatusCode { get; set; }
-        [Required]
         public ProjectStateTypes StateCode { get; set; }
     }
 
