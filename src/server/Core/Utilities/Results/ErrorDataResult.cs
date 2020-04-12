@@ -13,5 +13,13 @@
         public ErrorDataResult(T data, string message, int code) : base(data, false, message, code)
         {
         }
+
+        public ErrorDataResult(string message) : base(default, false, message)
+        {
+        }
+
+        public ErrorDataResult(string message, int code) : base(default, false, message, code)
+        {
+        }
     }
 }
