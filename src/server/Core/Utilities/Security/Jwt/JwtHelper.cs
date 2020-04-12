@@ -18,7 +18,7 @@ namespace Core.Utilities.Security.Jwt
         public JwtHelper(IConfiguration configuration)
         {
             Configuration = configuration;
-            _tokenOptions = Configuration.GetSection("TokenOptions") as TokenOptions;
+            _tokenOptions = Configuration.GetSection("tokenOptions").Get<TokenOptions>();
         }
         public AccessToken CreateToken(User user, List<string> roles)
         {
@@ -55,7 +55,7 @@ namespace Core.Utilities.Security.Jwt
         {
             var claims = new List<Claim>();
             claims.Add(new Claim(ClaimTypes.NameIdentifier, user.Id.ToString()));
-            claims.Add(new Claim(JwtRegisteredClaimNames.Email, user.Email));
+            claims.Add(new Claim(ClaimTypes.Email, user.Email));
             claims.Add(new Claim(ClaimTypes.Name, $"{user.FirstName} {user.LastName}"));
             roles.ToList().ForEach(role => claims.Add(new Claim(ClaimTypes.Role, role)));
 
