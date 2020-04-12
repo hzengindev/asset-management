@@ -2,7 +2,7 @@
 
 namespace Entities.Dtos.User
 {
-    public class UserForRegisterDto: IDto
+    public class UserRegisterDto : IDto
     {
         public string FirstName { get; set; }
         public string LastName { get; set; }

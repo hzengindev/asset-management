@@ -1,10 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace Entities.Abstract
+﻿namespace Entities.Abstract
 {
-    interface IDto
+    public interface IDto
     {
     }
 }
