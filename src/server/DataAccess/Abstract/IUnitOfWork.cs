@@ -4,7 +4,7 @@ namespace DataAccess.Abstract
 {
     public interface IUnitOfWork : IDisposable
     {
-        void BeginNewTransaction();
+        void BeginTransaction();
         void RollBackTransaction();
         int SaveChanges();
     }

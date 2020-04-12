@@ -16,7 +16,7 @@ namespace DataAccess.Concrete.EntityFramework.Transaction
             dbContext = _dbContext;
         }
 
-        public void BeginNewTransaction()
+        public void BeginTransaction()
         {
             try
             {
