@@ -1,2 +1,12 @@
 create migration => dotnet ef migrations add CreateModelAndInitialData -s ../WebAPI/WebAPI.csproj
 update migration => dotnet ef database update -s ../WebAPI/WebAPI.csproj
+
+drop table script =>
+drop table [dbo].[Customer]
+drop table [dbo].[Project]
+drop table [dbo].[ProjectUser]
+drop table [dbo].[Role]
+drop table [dbo].[RolePermission]
+drop table [dbo].[User]
+drop table [dbo].[UserRole]
+drop table [dbo].[Version]
