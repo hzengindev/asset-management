@@ -11,4 +11,10 @@ namespace Core.Utilities.Constants
         RSA = 3,
         TripleDes = 4
     }
+
+    public enum LanguageCode
+    {
+        English = 1033,
+        Turkish = 1055
+    }
 }

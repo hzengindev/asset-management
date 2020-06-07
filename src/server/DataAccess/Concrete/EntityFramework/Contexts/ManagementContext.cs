@@ -1,5 +1,8 @@
-﻿using Entities.Concrete;
+﻿using Core.Entities.Concrete;
+using Core.Utilities.IoC;
+using Entities.Concrete;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 using System;
 
 namespace DataAccess.Concrete.EntityFramework.Contexts
@@ -15,11 +18,10 @@ namespace DataAccess.Concrete.EntityFramework.Contexts
         public DbSet<UserRole> UserRoles { get; set; }
         public DbSet<Entities.Concrete.Version> Versions { get; set; }
 
-        public ManagementContext(DbContextOptions<ManagementContext> options) : base(options) { }
-
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            //optionsBuilder.UseSqlServer(@"Server=localhost\SQLEXPRESS;Database=AssetManagement;Trusted_Connection=True;");
+            var connectionString = ((IConfiguration)ServiceTool.ServiceProvider.GetService(typeof(IConfiguration))).GetConnectionString("DefaultConnection");
+            optionsBuilder.UseSqlServer(connectionString);
             base.OnConfiguring(optionsBuilder);
         }
 

@@ -32,9 +32,9 @@ namespace WebAPI.Controllers
         }
 
         [HttpPost("add")]
-        public IActionResult Add([FromBody] UserRegisterDto value)
+        public IActionResult Add([FromBody] UserAddDto value)
         {
-            var addResult = userService.Register(value, base._Id.Value);
+            var addResult = userService.Add(value, base._Id.Value);
 
             if (!addResult.Success)
                 return Error(addResult.Message, addResult.Code);

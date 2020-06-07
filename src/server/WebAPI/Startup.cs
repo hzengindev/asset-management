@@ -1,23 +1,26 @@
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Business.Abstract;
 using Business.Concrete;
+using Core.DependencyResolvers;
 using Core.Extentisions;
+using Core.Utilities.Localizations;
 using Core.Utilities.Security.Encyption;
 using Core.Utilities.Security.Jwt;
 using DataAccess.Abstract;
 using DataAccess.Concrete.EntityFramework;
 using DataAccess.Concrete.EntityFramework.Contexts;
-using DataAccess.Concrete.EntityFramework.Transaction;
 using Entities;
 using log4net;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
+using Microsoft.AspNetCore.Localization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -57,29 +60,18 @@ namespace WebAPI
                     };
                 });
 
-            //Database
-            services.AddDbContext<ManagementContext>(options => options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
-            
             //Context Accessor to Controller or Custom Implementations
             services.AddHttpContextAccessor();
 
             //Logging
             //services.AddSingleton<ILog>(LogManager.GetLogger("log4net-default-repository", "DatabaseLogger"));
-            
-            //Auth&JWT
-            services.AddSingleton<ITokenHelper, JwtHelper>();
 
-            //Repositories
-            services.AddScoped<IUserRepository, EFUserRepository>();
 
-            //UnitIfWork
-            services.AddScoped<IUnitOfWork, EFUnitOfWork>();
+            //Localization
+            Localization.Load();
 
-            //Services
-            services.AddScoped<IAuthService, AuthManager>();
-            services.AddScoped<IUserService, UserManager>();
-            
-            
+            services.AddDependencyResolvers(new Core.Utilities.IoC.ICoreModule[] { new CoreModule() });
+
             services.AddControllers();
         }
 
@@ -90,6 +82,16 @@ namespace WebAPI
             {
                 app.UseDeveloperExceptionPage();
             }
+
+            var supportedCultures = new[] { new CultureInfo("tr-tr"), new CultureInfo("en-us"), new CultureInfo("en-en") };
+            app.UseRequestLocalization(new RequestLocalizationOptions
+            {
+                DefaultRequestCulture = new RequestCulture("tr-tr"),
+                // Formatting numbers, dates, etc.
+                SupportedCultures = supportedCultures,
+                // UI strings that we have localized.
+                SupportedUICultures = supportedCultures
+            });
 
             app.UseAuthentication();
             app.UseCoreMiddlewaresExtension();

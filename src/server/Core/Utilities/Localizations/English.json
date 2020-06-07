@@ -1,0 +1,7 @@
+{
+  "10000": "User not found.",
+  "10001": "Username or password is wrong.",
+  "10002": "Role permission not found.",
+  "10003": "Email is empty.",
+  "10004": "Password is empty"
+}

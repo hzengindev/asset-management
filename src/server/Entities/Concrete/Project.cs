@@ -1,6 +1,5 @@
-﻿using Entities.Abstract;
+﻿using Core.Entities;
 using System;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
@@ -12,19 +11,13 @@ namespace Entities.Concrete
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public Guid Id { get; set; }
-        [Required]
-        [MaxLength(100)]
         public string Name { get; set; }
-        [Required]
-        [MaxLength(1000)]
         public string Description { get; set; }
-        [Required]
-        [MaxLength(100)]
         public string ShortCode { get; set; }
-        [Required]
         public Guid CustomerId { get; set; }
-
+        [DataType(DataType.DateTime)]
         public DateTime CreatedOn { get; set; }
+        [DataType(DataType.DateTime)]
         public DateTime ModifiedOn { get; set; }
         public Guid CreatedBy { get; set; }
         public Guid ModifiedBy { get; set; }

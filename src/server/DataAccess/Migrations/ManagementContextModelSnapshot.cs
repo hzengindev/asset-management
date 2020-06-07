@@ -19,6 +19,148 @@ namespace DataAccess.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+            modelBuilder.Entity("Core.Entities.Concrete.Role", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("Description")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Role");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = new Guid("59343ec3-965d-43e6-b60e-cc6fcd2e9160"),
+                            Description = "Admin role",
+                            Name = "Admin"
+                        });
+                });
+
+            modelBuilder.Entity("Core.Entities.Concrete.RolePermission", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("RoleId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("Scheme")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("RolePermission");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = new Guid("0622eb96-98e3-43cd-8232-ec4fb4f88936"),
+                            RoleId = new Guid("59343ec3-965d-43e6-b60e-cc6fcd2e9160"),
+                            Scheme = "user/get"
+                        });
+                });
+
+            modelBuilder.Entity("Core.Entities.Concrete.User", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid?>("CreatedBy")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime?>("CreatedOn")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Email")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("FirstName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("LastName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<Guid?>("ModifiedBy")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime?>("ModifiedOn")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("PasswordHash")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("PasswordSalt")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("RefreshToken")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("RefreshTokenExpiryDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<short>("StateCode")
+                        .HasColumnType("smallint");
+
+                    b.Property<short>("StatusCode")
+                        .HasColumnType("smallint");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("User");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = new Guid("fe039f76-d20e-4d89-bf2c-d0da49142819"),
+                            CreatedBy = new Guid("fe039f76-d20e-4d89-bf2c-d0da49142819"),
+                            CreatedOn = new DateTime(2020, 6, 7, 22, 41, 10, 68, DateTimeKind.Local).AddTicks(5066),
+                            Email = "admin@test.com",
+                            FirstName = "admin",
+                            LastName = "admin",
+                            ModifiedBy = new Guid("fe039f76-d20e-4d89-bf2c-d0da49142819"),
+                            ModifiedOn = new DateTime(2020, 6, 7, 22, 41, 10, 67, DateTimeKind.Local).AddTicks(8311),
+                            PasswordHash = "Pe/GAkoysqFrrBJ9ECjYmzO0JH6Eu6Xae3YcY5Hld39noqbz8vvhTcZp+uZ5whfJuK+PBqNpIMEACVQc7ZDqXw==",
+                            PasswordSalt = "Pj8PdCe/AMmXEcpofLIwMQe487JOZKRUVj6+drP75QtaTazArhso+zE7IxN1ehtKD3ldJfJE9+Rta0knsQ9hOWBvZob6WJTIfdMW1vMy9LosGpc5VWWq1x3OFl9HiMqAz98rpS0oXd7woxZYjEFyyGyISCyLIMW+aFeqoXJq9jc=",
+                            StateCode = (short)1,
+                            StatusCode = (short)1
+                        });
+                });
+
+            modelBuilder.Entity("Core.Entities.Concrete.UserRole", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("RoleId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("UserId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("UserRole");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = new Guid("f6b40ffd-c6de-444a-857f-9d942070af3c"),
+                            RoleId = new Guid("59343ec3-965d-43e6-b60e-cc6fcd2e9160"),
+                            UserId = new Guid("fe039f76-d20e-4d89-bf2c-d0da49142819")
+                        });
+                });
+
             modelBuilder.Entity("Entities.Concrete.Customer", b =>
                 {
                     b.Property<Guid>("Id")
@@ -38,9 +180,7 @@ namespace DataAccess.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(100)")
-                        .HasMaxLength(100);
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<short>("StateCode")
                         .HasColumnType("smallint");
@@ -55,11 +195,11 @@ namespace DataAccess.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("1d9cc685-2d46-455c-9d5c-e83135070926"),
-                            CreatedBy = new Guid("385b4ed0-eee0-4101-9e96-1388624ff53f"),
-                            CreatedOn = new DateTime(2020, 4, 12, 17, 34, 16, 802, DateTimeKind.Local).AddTicks(4136),
-                            ModifiedBy = new Guid("385b4ed0-eee0-4101-9e96-1388624ff53f"),
-                            ModifiedOn = new DateTime(2020, 4, 12, 17, 34, 16, 802, DateTimeKind.Local).AddTicks(3358),
+                            Id = new Guid("093db73c-11d7-4860-91d8-977b5d719f8d"),
+                            CreatedBy = new Guid("fe039f76-d20e-4d89-bf2c-d0da49142819"),
+                            CreatedOn = new DateTime(2020, 6, 7, 22, 41, 10, 69, DateTimeKind.Local).AddTicks(5008),
+                            ModifiedBy = new Guid("fe039f76-d20e-4d89-bf2c-d0da49142819"),
+                            ModifiedOn = new DateTime(2020, 6, 7, 22, 41, 10, 69, DateTimeKind.Local).AddTicks(4584),
                             Name = "Demo customer",
                             StateCode = (short)1,
                             StatusCode = (short)1
@@ -82,9 +222,7 @@ namespace DataAccess.Migrations
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("Description")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(1000)")
-                        .HasMaxLength(1000);
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<Guid>("ModifiedBy")
                         .HasColumnType("uniqueidentifier");
@@ -93,14 +231,10 @@ namespace DataAccess.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(100)")
-                        .HasMaxLength(100);
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("ShortCode")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(100)")
-                        .HasMaxLength(100);
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<short>("StateCode")
                         .HasColumnType("smallint");
@@ -115,13 +249,13 @@ namespace DataAccess.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("5ae7c4b7-3059-481f-8d6b-d4fec0bfff80"),
-                            CreatedBy = new Guid("385b4ed0-eee0-4101-9e96-1388624ff53f"),
-                            CreatedOn = new DateTime(2020, 4, 12, 17, 34, 16, 802, DateTimeKind.Local).AddTicks(8748),
-                            CustomerId = new Guid("1d9cc685-2d46-455c-9d5c-e83135070926"),
+                            Id = new Guid("fe2a33d6-00f4-4676-aa77-a159f360ff1e"),
+                            CreatedBy = new Guid("fe039f76-d20e-4d89-bf2c-d0da49142819"),
+                            CreatedOn = new DateTime(2020, 6, 7, 22, 41, 10, 69, DateTimeKind.Local).AddTicks(7395),
+                            CustomerId = new Guid("093db73c-11d7-4860-91d8-977b5d719f8d"),
                             Description = "Demo project",
-                            ModifiedBy = new Guid("385b4ed0-eee0-4101-9e96-1388624ff53f"),
-                            ModifiedOn = new DateTime(2020, 4, 12, 17, 34, 16, 802, DateTimeKind.Local).AddTicks(8001),
+                            ModifiedBy = new Guid("fe039f76-d20e-4d89-bf2c-d0da49142819"),
+                            ModifiedOn = new DateTime(2020, 6, 7, 22, 41, 10, 69, DateTimeKind.Local).AddTicks(7005),
                             Name = "Demo project",
                             ShortCode = "Demo-Project",
                             StateCode = (short)1,
@@ -148,161 +282,9 @@ namespace DataAccess.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("becae929-47ac-4134-8c0b-665d0cc7b49b"),
-                            ProjectId = new Guid("5ae7c4b7-3059-481f-8d6b-d4fec0bfff80"),
-                            UserId = new Guid("385b4ed0-eee0-4101-9e96-1388624ff53f")
-                        });
-                });
-
-            modelBuilder.Entity("Entities.Concrete.Role", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<string>("Description")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(1000)")
-                        .HasMaxLength(1000);
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(100)")
-                        .HasMaxLength(100);
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Role");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = new Guid("fadb53a8-a759-4d9b-9729-994a6f55b33b"),
-                            Description = "Admin role",
-                            Name = "Admin"
-                        });
-                });
-
-            modelBuilder.Entity("Entities.Concrete.RolePermission", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<Guid>("RoleId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<string>("Scheme")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(200)")
-                        .HasMaxLength(200);
-
-                    b.HasKey("Id");
-
-                    b.ToTable("RolePermission");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = new Guid("b9856ea2-f8ed-4ddb-971d-45acd4afb5b2"),
-                            RoleId = new Guid("fadb53a8-a759-4d9b-9729-994a6f55b33b"),
-                            Scheme = "user/get"
-                        });
-                });
-
-            modelBuilder.Entity("Entities.Concrete.User", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<Guid?>("CreatedBy")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<DateTime?>("CreatedOn")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("Email")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(100)")
-                        .HasMaxLength(100);
-
-                    b.Property<string>("FirstName")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(100)")
-                        .HasMaxLength(100);
-
-                    b.Property<string>("LastName")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(100)")
-                        .HasMaxLength(100);
-
-                    b.Property<Guid?>("ModifiedBy")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<DateTime?>("ModifiedOn")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("PasswordHash")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(1000)")
-                        .HasMaxLength(1000);
-
-                    b.Property<string>("PasswordSalt")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(1000)")
-                        .HasMaxLength(1000);
-
-                    b.Property<short>("StateCode")
-                        .HasColumnType("smallint");
-
-                    b.Property<short>("StatusCode")
-                        .HasColumnType("smallint");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("User");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = new Guid("385b4ed0-eee0-4101-9e96-1388624ff53f"),
-                            CreatedBy = new Guid("385b4ed0-eee0-4101-9e96-1388624ff53f"),
-                            CreatedOn = new DateTime(2020, 4, 12, 17, 34, 16, 801, DateTimeKind.Local).AddTicks(256),
-                            Email = "admin@test.com",
-                            FirstName = "admin",
-                            LastName = "admin",
-                            ModifiedBy = new Guid("385b4ed0-eee0-4101-9e96-1388624ff53f"),
-                            ModifiedOn = new DateTime(2020, 4, 12, 17, 34, 16, 800, DateTimeKind.Local).AddTicks(1937),
-                            PasswordHash = "Pe/GAkoysqFrrBJ9ECjYmzO0JH6Eu6Xae3YcY5Hld39noqbz8vvhTcZp+uZ5whfJuK+PBqNpIMEACVQc7ZDqXw==",
-                            PasswordSalt = "Pj8PdCe/AMmXEcpofLIwMQe487JOZKRUVj6+drP75QtaTazArhso+zE7IxN1ehtKD3ldJfJE9+Rta0knsQ9hOWBvZob6WJTIfdMW1vMy9LosGpc5VWWq1x3OFl9HiMqAz98rpS0oXd7woxZYjEFyyGyISCyLIMW+aFeqoXJq9jc=",
-                            StateCode = (short)1,
-                            StatusCode = (short)1
-                        });
-                });
-
-            modelBuilder.Entity("Entities.Concrete.UserRole", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<Guid>("RoleId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<Guid>("UserId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("UserRole");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = new Guid("9da59431-2834-44df-aa9f-f6d598ce4fb6"),
-                            RoleId = new Guid("fadb53a8-a759-4d9b-9729-994a6f55b33b"),
-                            UserId = new Guid("385b4ed0-eee0-4101-9e96-1388624ff53f")
+                            Id = new Guid("6c2bf836-c4ef-497a-b7f5-dc8b0487dd74"),
+                            ProjectId = new Guid("fe2a33d6-00f4-4676-aa77-a159f360ff1e"),
+                            UserId = new Guid("fe039f76-d20e-4d89-bf2c-d0da49142819")
                         });
                 });
 
@@ -322,14 +304,10 @@ namespace DataAccess.Migrations
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("Description")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(1000)")
-                        .HasMaxLength(1000);
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("DirectoryPath")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(1000)")
-                        .HasMaxLength(1000);
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<Guid>("ModifiedBy")
                         .HasColumnType("uniqueidentifier");
@@ -338,14 +316,10 @@ namespace DataAccess.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(100)")
-                        .HasMaxLength(100);
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("PreviewFile")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(1000)")
-                        .HasMaxLength(1000);
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<Guid>("ProjectId")
                         .HasColumnType("uniqueidentifier");

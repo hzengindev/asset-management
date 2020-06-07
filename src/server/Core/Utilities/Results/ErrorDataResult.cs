@@ -1,4 +1,6 @@
-﻿namespace Core.Utilities.Results
+﻿using Core.Utilities.Localizations;
+
+namespace Core.Utilities.Results
 {
     public class ErrorDataResult<T> : DataResult<T>
     {
@@ -19,6 +21,10 @@
         }
 
         public ErrorDataResult(string message, int code) : base(default, false, message, code)
+        {
+        }
+
+        public ErrorDataResult(TextCode code) : base(default, false, code.GetText(), (int)code)
         {
         }
     }

@@ -1,5 +1,5 @@
-﻿using Core.Utilities.Security.Encyption;
-using Entities.Concrete;
+﻿using Core.Entities.Concrete;
+using Core.Utilities.Security.Encyption;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
 using System;
@@ -14,7 +14,7 @@ namespace Core.Utilities.Security.Jwt
     {
         public IConfiguration Configuration { get; }
         private TokenOptions _tokenOptions;
-        private DateTime _accessTokenExpiration;
+        private DateTime _accessTokenExpiryDate;
         public JwtHelper(IConfiguration configuration)
         {
             Configuration = configuration;
@@ -22,7 +22,7 @@ namespace Core.Utilities.Security.Jwt
         }
         public AccessToken CreateToken(User user, List<string> roles)
         {
-            _accessTokenExpiration = DateTime.Now.AddMinutes(_tokenOptions.AccessTokenExpiration);
+            _accessTokenExpiryDate = DateTime.Now.AddMinutes(_tokenOptions.AccessTokenExpiryDate);
             var securityKey = SecurityKeyHelper.CreateSecurityKey(_tokenOptions.SecurityKey);
             var signingCredentials = SigningCredentialsHelper.CreateSigningCredentials(securityKey);
             var jwt = CreateJwtSecurityToken(_tokenOptions, user, signingCredentials, roles);
@@ -32,7 +32,7 @@ namespace Core.Utilities.Security.Jwt
             return new AccessToken
             {
                 Token = token,
-                Expiration = _accessTokenExpiration
+                TokenExpiryDate = _accessTokenExpiryDate
             };
 
         }
@@ -43,7 +43,7 @@ namespace Core.Utilities.Security.Jwt
             var jwt = new JwtSecurityToken(
                 issuer: tokenOptions.Issuer,
                 audience: tokenOptions.Audience,
-                expires: _accessTokenExpiration,
+                expires: _accessTokenExpiryDate,
                 notBefore: DateTime.Now,
                 claims: SetClaims(user, roles),
                 signingCredentials: signingCredentials

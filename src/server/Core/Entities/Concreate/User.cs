@@ -1,9 +1,8 @@
-﻿using Entities.Abstract;
-using System;
+﻿using System;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace Entities.Concrete
+namespace Core.Entities.Concrete
 {
     [Table("User")]
     public class User : IEntity
@@ -11,22 +10,14 @@ namespace Entities.Concrete
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public Guid Id { get; set; }
-        [Required]
-        [MaxLength(100)]
         public string FirstName { get; set; }
-        [Required]
-        [MaxLength(100)]
         public string LastName { get; set; }
-        [Required]
-        [MaxLength(100)]
         public string Email { get; set; }
-        [Required]
-        [MaxLength(1000)]
         public string PasswordSalt { get; set; }
-        [Required]
-        [MaxLength(1000)]
         public string PasswordHash { get; set; }
-
+        public string RefreshToken { get; set; }
+        [DataType(DataType.DateTime)]
+        public DateTime? RefreshTokenExpiryDate { get; set; }
         [DataType(DataType.DateTime)]
         public DateTime? CreatedOn { get; set; }
         [DataType(DataType.DateTime)]
