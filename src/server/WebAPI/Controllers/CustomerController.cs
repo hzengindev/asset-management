@@ -23,5 +23,29 @@ namespace WebAPI.Controllers
 
             return Success(new { Id = addResult.Data });
         }
+
+        [HttpPost("update")]
+        public IActionResult Update([FromBody] CustomerUpdateDto value)
+        {
+            var updateResult = _customerService.Update(value, base._Id.Value);
+
+            if (!updateResult.Success)
+                return Error(updateResult.Message, updateResult.Code);
+
+            return Success();
+        }
+
+        [HttpPost("delete")]
+        public IActionResult Delete([FromBody] CustomerDeleteDto value)
+        {
+            var deleteResult = _customerService.Delete(value, base._Id.Value);
+
+            if (!deleteResult.Success)
+                return Error(deleteResult.Message, deleteResult.Code);
+
+            //TODO: delete ops
+
+            return Success();
+        }
     }
 }
