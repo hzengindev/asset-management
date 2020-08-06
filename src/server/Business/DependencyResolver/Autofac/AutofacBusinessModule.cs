@@ -17,6 +17,8 @@ namespace Business.DependencyResolver.Autofac
             builder.RegisterType<EFCustomerDal>().As<ICustomerDal>();
             builder.RegisterType<ProjectManager>().As<IProjectService>();
             builder.RegisterType<EFProjectDal>().As<IProjectDal>();
+            builder.RegisterType<ProjectUserManager>().As<IProjectUserService>();
+            builder.RegisterType<EFProjectUserDal>().As<IProjectUserDal>();
 
             builder.RegisterType<AuthManager>().As<IAuthService>();
             builder.RegisterType<JwtHelper>().As<ITokenHelper>();

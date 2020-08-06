@@ -40,6 +40,12 @@ namespace WebAPI.Controllers
         }
 
         [NonAction]
+        public IActionResult Success()
+        {
+            return Ok();
+        }
+
+        [NonAction]
         public IActionResult Success(object data = default(object))
         {
             return Ok(data);
