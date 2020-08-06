@@ -35,6 +35,15 @@ namespace WebAPI.Controllers
             return Success();
         }
 
+        [HttpPost("delete")]
+        public IActionResult Delete([FromBody] ProjectDeleteDto value)
+        {
+            var deleteResult = _projectService.Delete(value, base._Id.Value);
 
+            if (!deleteResult.Success)
+                return Error(deleteResult.Message, deleteResult.Code);
+
+            return Success();
+        }
     }
 }
