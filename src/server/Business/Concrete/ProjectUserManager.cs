@@ -1,8 +1,10 @@
 ﻿using Business.Abstract;
 using Core.Utilities.Results;
 using DataAccess.Abstract;
+using Entities.Concrete;
 using Entities.Dtos.ProjectUser;
 using System;
+using System.Collections.Generic;
 
 namespace Business.Concrete
 {
@@ -36,6 +38,12 @@ namespace Business.Concrete
             _projectUserDal.Delete(_projectUser);
             
             return new SuccessResult();
+        }
+
+        public IDataResult<IList<ProjectUser>> GetByProjectId(Guid projectId)
+        {
+            var projectUsers = _projectUserDal.GetList(z => z.ProjectId == projectId);
+            return new SuccessDataResult<IList<Entities.Concrete.ProjectUser>>(projectUsers);
         }
     }
 }
