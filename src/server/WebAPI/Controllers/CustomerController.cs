@@ -7,6 +7,7 @@ using WebAPI.Responses;
 
 namespace WebAPI.Controllers
 {
+    [Route("api/customer")]
     public class CustomerController : BaseApiController
     {
         ICustomerService _customerService;

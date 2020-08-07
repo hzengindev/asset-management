@@ -3,10 +3,12 @@ using Entities.Dtos.Version;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Swashbuckle.AspNetCore.Annotations;
+using System;
 using WebAPI.Responses;
 
 namespace WebAPI.Controllers
 {
+    [Route("api/version")]
     public class VersionController : BaseApiController
     {
         IVersionService _versionService;
@@ -49,6 +51,33 @@ namespace WebAPI.Controllers
             return Success();
         }
 
+        [HttpPost("add-files/{versionId}")]
+        public IActionResult AddFiles(IFormFile file, [FromRoute] Guid versionId)
+        {
+            if (file == null || file.Length == 0)
+                return Error("Content is null");
 
+            string fileName = file.FileName;
+            string fileMimeType = file.ContentType;
+            byte[] bytes;
+            using (var memoryStream = new System.IO.MemoryStream())
+            {
+                file.CopyTo(memoryStream);
+                bytes = memoryStream.ToArray();
+            }
+
+            var saveVersionFileResult = _versionService.SaveVersionFile(new SaveVersionFileDto
+            {
+                VersionId = versionId,
+                Filename = fileName,
+                FileMimeType = fileMimeType,
+                File = bytes
+            }, base._Id.Value);
+
+            if (!saveVersionFileResult.Success)
+                return Error(saveVersionFileResult.Message, saveVersionFileResult.Code);
+
+            return Success();
+        }
     }
 }

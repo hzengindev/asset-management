@@ -11,5 +11,6 @@ namespace Business.Abstract
         IResult Update(VersionUpdateDto version, Guid owner);
         IResult Delete(VersionDeleteDto version, Guid owner);
         IDataResult<IList<Entities.Concrete.Version>> GetByProjectId(Guid projectId);
+        IResult SaveVersionFile(SaveVersionFileDto value, Guid owner);
     }
 }

@@ -5,6 +5,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="version-files\versions.txt" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="Autofac.Extensions.DependencyInjection" Version="6.0.0" />
     <PackageReference Include="log4net" Version="2.0.8" />
     <PackageReference Include="MicroKnights.Log4NetAdoNetAppender" Version="2.0.1" />
@@ -24,6 +28,10 @@
     <ProjectReference Include="..\Business\Business.csproj" />
     <ProjectReference Include="..\Core\Core.csproj" />
     <ProjectReference Include="..\Entities\Entities.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="version-files\versions.txt" />
   </ItemGroup>
 
   <ItemGroup>

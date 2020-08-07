@@ -8,6 +8,7 @@ using WebAPI.Responses.User;
 
 namespace WebAPI.Controllers
 {
+    [Route("api/user")]
     public class UserController : BaseApiController
     {
         IUserService userService;

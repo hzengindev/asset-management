@@ -7,6 +7,7 @@ using WebAPI.Responses;
 
 namespace WebAPI.Controllers
 {
+    [Route("api/project-user")]
     public class ProjectUserController : BaseApiController
     {
         IProjectUserService _projectUserService;

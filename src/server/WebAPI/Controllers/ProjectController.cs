@@ -7,6 +7,7 @@ using WebAPI.Responses;
 
 namespace WebAPI.Controllers
 {
+    [Route("api/project")]
     public class ProjectController : BaseApiController
     {
         IProjectService _projectService;

@@ -9,6 +9,7 @@ using Swashbuckle.AspNetCore.Annotations;
 
 namespace WebAPI.Controllers
 {
+    [Route("api/auth")]
     public class AuthController : BaseApiController
     {
         IAuthService _authService;
