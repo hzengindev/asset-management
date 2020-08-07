@@ -2,6 +2,8 @@
 using Entities.Dtos.Project;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Swashbuckle.AspNetCore.Annotations;
+using WebAPI.Responses;
 
 namespace WebAPI.Controllers
 {
@@ -13,6 +15,7 @@ namespace WebAPI.Controllers
             _projectService = projectService;
         }
 
+        [SwaggerResponse(200, type: typeof(CreateResponse))]
         [HttpPost("add")]
         public IActionResult Add([FromBody] ProjectAddDto value)
         {
@@ -21,7 +24,7 @@ namespace WebAPI.Controllers
             if (!addResult.Success)
                 return Error(addResult.Message, addResult.Code);
 
-            return Success(new { Id = addResult.Data });
+            return Success(new CreateResponse { Id = addResult.Data });
         }
 
         [HttpPost("update")]

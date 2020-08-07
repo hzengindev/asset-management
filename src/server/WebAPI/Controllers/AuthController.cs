@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
+using Swashbuckle.AspNetCore.Annotations;
 
 namespace WebAPI.Controllers
 {
@@ -24,6 +25,7 @@ namespace WebAPI.Controllers
         }
 
         [AllowAnonymous]
+        [SwaggerResponse(200, type: typeof(AccessToken))]
         [HttpPost("signin")]
         public IActionResult SignIn([FromBody] SignInDto value)
         {
@@ -41,6 +43,7 @@ namespace WebAPI.Controllers
         }
 
         [AllowAnonymous]
+        [SwaggerResponse(200, type: typeof(AccessToken))]
         [HttpPost("signin-refresh-token")]
         public IActionResult SignInRefreshToken([FromBody] SignInRefreshTokenDto value)
         {

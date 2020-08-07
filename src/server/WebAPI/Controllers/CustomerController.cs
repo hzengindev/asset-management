@@ -2,6 +2,8 @@
 using Entities.Dtos.Customer;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Swashbuckle.AspNetCore.Annotations;
+using WebAPI.Responses;
 
 namespace WebAPI.Controllers
 {
@@ -13,15 +15,16 @@ namespace WebAPI.Controllers
             _customerService = customerService;
         }
 
+        [SwaggerResponse(200, type: typeof(CreateResponse))]
         [HttpPost("add")]
         public IActionResult Add([FromBody] CustomerAddDto value)
         {
             var addResult = _customerService.Add(value, base._Id.Value);
-            
+
             if (!addResult.Success)
                 return Error(addResult.Message, addResult.Code);
 
-            return Success(new { Id = addResult.Data });
+            return Success(new CreateResponse { Id = addResult.Data });
         }
 
         [HttpPost("update")]
@@ -42,8 +45,6 @@ namespace WebAPI.Controllers
 
             if (!deleteResult.Success)
                 return Error(deleteResult.Message, deleteResult.Code);
-
-            //TODO: delete ops
 
             return Success();
         }

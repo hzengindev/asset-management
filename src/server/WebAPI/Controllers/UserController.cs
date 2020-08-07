@@ -2,17 +2,22 @@
 using Entities.Dtos.User;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Swashbuckle.AspNetCore.Annotations;
+using WebAPI.Responses;
+using WebAPI.Responses.User;
 
 namespace WebAPI.Controllers
 {
     public class UserController : BaseApiController
     {
         IUserService userService;
-        public UserController(IUserService _userService, IHttpContextAccessor _context):base(_context)
+        public UserController(IUserService _userService, IHttpContextAccessor _context) : base(_context)
         {
             userService = _userService;
         }
 
+
+        [SwaggerResponse(200, type: typeof(GetResponse))]
         [HttpGet("get")]
         public IActionResult Get()
         {
@@ -21,16 +26,18 @@ namespace WebAPI.Controllers
             if (!getResult.Success)
                 return Error(getResult.Message, getResult.Code);
 
-            return Success(new {
-                getResult.Data.Id,
-                getResult.Data.Email,
-                getResult.Data.FirstName,
-                getResult.Data.LastName,
-                getResult.Data.StateCode,
-                getResult.Data.StatusCode
+            return Success(new GetResponse
+            {
+                Id = getResult.Data.Id,
+                Email = getResult.Data.Email,
+                FirstName = getResult.Data.FirstName,
+                LastName = getResult.Data.LastName,
+                StateCode = (short)getResult.Data.StateCode,
+                StatusCode = (short)getResult.Data.StatusCode
             });
         }
 
+        [SwaggerResponse(200, type: typeof(CreateResponse))]
         [HttpPost("add")]
         public IActionResult Add([FromBody] UserAddDto value)
         {
@@ -39,7 +46,7 @@ namespace WebAPI.Controllers
             if (!addResult.Success)
                 return Error(addResult.Message, addResult.Code);
 
-            return Success(new { Id = addResult.Data });
+            return Success(new CreateResponse { Id = addResult.Data });
         }
     }
 }
