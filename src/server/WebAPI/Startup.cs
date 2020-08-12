@@ -15,6 +15,7 @@ using DataAccess.Abstract;
 using DataAccess.Concrete.EntityFramework;
 using DataAccess.Concrete.EntityFramework.Contexts;
 using Entities;
+using HealthChecks.UI.Client;
 using log4net;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
@@ -74,6 +75,17 @@ namespace WebAPI
             services.AddDependencyResolvers(new Core.Utilities.IoC.ICoreModule[] { new CoreModule() });
 
             services.AddControllers();
+
+            services
+                .AddHealthChecks()
+                .AddSqlServer(Configuration.GetConnectionString("DefaultConnection"));
+
+            services
+                .AddHealthChecksUI(setupSettings: setup =>
+                {
+                    setup.AddHealthCheckEndpoint("Asset Management", "/health");
+                })
+                .AddInMemoryStorage();
 
             services.AddSwaggerGen(s =>
             {
@@ -157,6 +169,12 @@ namespace WebAPI
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();
+                endpoints.MapHealthChecks("/health", new Microsoft.AspNetCore.Diagnostics.HealthChecks.HealthCheckOptions
+                {
+                    Predicate = x => true,
+                    ResponseWriter = UIResponseWriter.WriteHealthCheckUIResponse
+                });
+                endpoints.MapHealthChecksUI();
             });
         }
     }
